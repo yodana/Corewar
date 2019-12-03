@@ -32,12 +32,11 @@ int     is_label(char *label)
     return (1);
 }
 
-void    get_label(char *line, t_env *env)
+int   get_label(char *line, t_env *env)
 {
     int i;
     char *label;
 
-    (void)env;
     i = 0;
     label = NULL;
     while(line[i] && line[i] != ':')
@@ -47,5 +46,10 @@ void    get_label(char *line, t_env *env)
     //printf("label %s\n", label);
     if (is_label(label) == 1)
         put_label(env, label);
+    else
+        i = 0;
     ft_strdel(&label);
+    if (i == 0)
+        return (0);    
+    return (i + 1);
 }

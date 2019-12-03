@@ -22,18 +22,24 @@ void    create_file_cor(char *file_name, header_t *header)
 void    every_go(char *av, t_env *env)
 {
     //int error;
-    int fd;
-    char *line;
-
+    int     fd;
+    char    *line;
+    int     i;
+    
+    i = 0;
     fd = open(av, O_RDONLY);
-    while (get_next_line(fd, &line) == 1)
-    {
-        get_label(line, env);
+    get_next_line(fd, &line);
+    //{
+        i = get_label(line, env);
+        printf("line apres get_label ==%s\n", &line[i]);
+        get_instruc(&line[i], env);
        // get_instruct(line, env);
         //error = label(env);
+        i = 0;
         free(line);
-    }
+    //}
     print_label(env->label);
+    print_instruc(env->instruc);
     close(fd);
 }
 
@@ -47,7 +53,7 @@ int main(int ac, char **av)
     env = init_env();
     if (ac == 1)
         return (-1);
-    if (!(header == malloc(sizeof(header_t))))
+    if (!(header = malloc(sizeof(header_t))))
         return (-1);
     while (av[i])
     {
