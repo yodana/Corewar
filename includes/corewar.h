@@ -28,4 +28,6 @@ typedef struct s_env
 t_env   *init_env();
 t_instruc   *new_instruct();
 t_label     *new_label();
+void        get_label(char *line, t_env *env);
+void    print_label(t_label *labels);
 #endif

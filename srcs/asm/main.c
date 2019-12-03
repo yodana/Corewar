@@ -25,12 +25,16 @@ void    every_go(char *av, t_env *env)
     int fd;
     char *line;
 
-    (void)env;
     fd = open(av, O_RDONLY);
-    get_next_line(fd, &line);
-    //error = label(env);
+    while (get_next_line(fd, &line) == 1)
+    {
+        get_label(line, env);
+       // get_instruct(line, env);
+        //error = label(env);
+        free(line);
+    }
+    print_label(env->label);
     close(fd);
-    free(line);
 }
 
 int main(int ac, char **av)
@@ -41,8 +45,9 @@ int main(int ac, char **av)
 
     i = 1; 
     env = init_env();
-    header = malloc(sizeof(header_t));
     if (ac == 1)
+        return (-1);
+    if (!(header == malloc(sizeof(header_t))))
         return (-1);
     while (av[i])
     {
@@ -50,6 +55,7 @@ int main(int ac, char **av)
         every_go(av[i], env);
         i++;
     }
+    
     //free(header);
     return (0);
 }
